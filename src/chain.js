@@ -96,12 +96,11 @@ export const chainMap = {
         min_tx_fee: ["4000000000000000", "4000000000000000"],
         gas: 200000,
         prefix: "evmos"
- },         
-         "celestia": {
+    },         
+    "celestia": {
         name: 'Celestia',
-        rpc: 'https://rpc.cosmos.directory/celestia',
-        rest: 'https://rest.cosmos.directory/celestia',
-        hd_path: "m/44'/60'/0'/0/0",
+        rpc: 'https://celestia-rpc.polkachu.com',
+        rest: 'https://celestia-rpc.polkachu.com',
         symbol: 'TIA',
         denom: "utia",
         exponent: 6,
