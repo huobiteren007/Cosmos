@@ -96,19 +96,17 @@ export const chainMap = {
         min_tx_fee: ["4000000000000000", "4000000000000000"],
         gas: 200000,
         prefix: "evmos"
-    },
-    "atlantic-1":{
-        name:'Sei Atlantic Testnet',
-        chain_status:'experiemental',
-        rpc:'https://sei-testnet.nodejumper.io:443',
-        rest:"https://sei-testnet.nodejumper.io:1317",
-        symbol:'SEI',
-        denom: "usei",
+ },         
+         "celestia": {
+        name: 'Celestia',
+        rpc: 'https://rpc.cosmos.directory/celestia',
+        rest: 'https://rest.cosmos.directory/celestia',
+        hd_path: "m/44'/60'/0'/0/0",
+        symbol: 'TIA',
+        denom: "utia",
         exponent: 6,
-        min_tx_fee: "0",
-        prefix:"sei",
-        gas:80000,
-        coin_type:118
-
+        min_tx_fee: "8000",
+        gas: 120000,
+        prefix: "celestia"
     }
 }
