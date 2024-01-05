@@ -95,36 +95,36 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", async function () {
-            // Check if Kepler Wallet is installed
-            if (window.getOfflineSigner && window.keplr) {
+    if (window.getOfflineSigner && window.keplr) {
+        const offlineSigner = window.getOfflineSigner("cosmos");
+
+        document.getElementById("connectWallet").addEventListener("click", async function () {
+            try {
+                console.log("Attempting to enable Kepler Wallet...");
+                await window.keplr.enable("cosmos");
+
+                console.log("Kepler Wallet enabled successfully.");
+
+                // Get offline signer after user approves
                 const offlineSigner = window.getOfflineSigner("cosmos");
 
-                document.getElementById("connectWallet").addEventListener("click", async function () {
-                    try {
-                        // Enable Kepler Wallet and request user's approval
-                        await window.keplr.enable("cosmos");
+                // Your code to interact with the Kepler Wallet, e.g., fetching account details
+                const accounts = await offlineSigner.getAccounts();
+                const address = accounts[0].address;
 
-                        // Get offline signer after user approves
-                        const offlineSigner = window.getOfflineSigner("cosmos");
-
-                        // Your code to interact with the Kepler Wallet, e.g., fetching account details
-                        const accounts = await offlineSigner.getAccounts();
-                        const address = accounts[0].address;
-
-                        // Display the connected address
-                        document.getElementById("connected").innerHTML = `<p>Connected Address: ${address}</p>`;
-                    } catch (error) {
-                        console.error("Error connecting Kepler Wallet:", error);
-                    }
-                });
-            } else {
-                console.error("Kepler Wallet not found. Please make sure it's installed.");
+                // Display the connected address
+                document.getElementById("connected").innerHTML = `<p>Connected Address: ${address}</p>`;
+            } catch (error) {
+                console.error("Error connecting Kepler Wallet:", error);
             }
         });
+    } else {
+        console.error("Kepler Wallet not found. Please make sure it's installed.");
+    }
+});
+
     </script>
 
 </body>
 
 </html>
-
-
