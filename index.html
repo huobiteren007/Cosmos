@@ -22,12 +22,16 @@
             <distribute-logo state="4">
                 <header>
                     <div class="cosmos active">
-                        <!-- Your existing logo SVG code here -->
+                        <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 486 486" width="35"
+                            height="35">
+                            <!-- ... (your existing SVG content) ... -->
+                        </svg>
                     </div>
                     <h1>Distribute</h1>
                     <div class="expand"></div>
                 </header>
-                <p><span style="font-style: normal"> distribute tokens to multiple addresses</span></p>
+                <p><span style="font-style: normal"> distribute tokens to multiple
+                        addresses</span></p>
             </distribute-logo>
         </section>
         <div id="connected"></div>
@@ -64,17 +68,20 @@
                 <div id="send"></div>
                 <div class="status" id="status"></div>
             </distribute-transaction>
+            
+            <!-- Add a button for connecting Kepler Wallet -->
+            <button id="connectWallet" class="btn btn-primary">Connect Kepler Wallet</button>
+
         </form>
 
     </article>
-    <div class="modal fade" id="disclaimer" tabindex="-1" role="dialog" aria-labelledby="disclaimer"
-        aria-hidden="true">
-        <!-- Your existing modal code here -->
+    <div class="modal fade" id="disclaimer" tabindex="-1" role="dialog" aria-labelledby="disclaimer" aria-hidden="true">
+        <!-- ... (your existing modal content) ... -->
     </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
         crossorigin="anonymous"></script>
@@ -82,100 +89,42 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
     <script src="./js/jquery.toast.min.js"></script>
-    <!-- Script to check and display Kepler connection status -->
+
+    <!-- Add Kepler Wallet script -->
+    <script src="https://cdn.jsdelivr.net/npm/@keplr-wallet/stores@0.7.0/dist/index.umd.min.js"></script>
+
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var connectedElement = document.getElementById('connected');
+        document.addEventListener("DOMContentLoaded", async function () {
+            // Check if Kepler Wallet is installed
+            if (window.getOfflineSigner && window.keplr) {
+                const offlineSigner = window.getOfflineSigner("cosmos");
 
-            if (window.getOfflineSigner && window.getOfflineSigner.getAccounts) {
-                connectedElement.innerHTML = 'Connected to Kepler Wallet';
-            } else {
-                connectedElement.innerHTML = 'Not connected to Kepler Wallet';
+                document.getElementById("connectWallet").addEventListener("click", async function () {
+                    try {
+                        // Enable Kepler Wallet and request user's approval
+                        await window.keplr.enable("cosmos");
 
-                // Add a button to connect Kepler Wallet
-                var connectButton = document.createElement('button');
-                connectButton.innerHTML = 'Connect to Kepler Wallet';
-                connectButton.className = 'btn btn-primary';
-                connectButton.addEventListener('click', function () {
-                    // Add code to open Kepler Wallet here
-                    alert('Opening Kepler Wallet...');
+                        // Get offline signer after user approves
+                        const offlineSigner = window.getOfflineSigner("cosmos");
+
+                        // Your code to interact with the Kepler Wallet, e.g., fetching account details
+                        const accounts = await offlineSigner.getAccounts();
+                        const address = accounts[0].address;
+
+                        // Display the connected address
+                        document.getElementById("connected").innerHTML = `<p>Connected Address: ${address}</p>`;
+                    } catch (error) {
+                        console.error("Error connecting Kepler Wallet:", error);
+                    }
                 });
-
-                // Append the button to the connected element
-                connectedElement.appendChild(connectButton);
+            } else {
+                console.error("Kepler Wallet not found. Please make sure it's installed.");
             }
         });
     </script>
 
-    <!-- Your existing HTML code -->
-
-<!-- Optional JavaScript -->
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"
-integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-crossorigin="anonymous"></script>
-<script src="./js/jquery.toast.min.js"></script>
-
-<!-- Script to check and display Kepler connection status -->
-<script>
-document.addEventListener('DOMContentLoaded', async function () {
-    var connectedElement = document.getElementById('connected');
-
-    if (window.getOfflineSigner && window.getOfflineSigner.getAccounts) {
-        connectedElement.innerHTML = 'Connected to Kepler Wallet';
-
-        // Your existing code for chainId
-        var chainId = "cosmoshub-4";
-
-        // Enabling before using the Keplr is recommended.
-        // This method will ask the user whether or not to allow access if they haven't visited this website.
-        // Also, it will request user to unlock the wallet if the wallet is locked.
-        await window.keplr.enable(chainId);
-
-        const offlineSigner = window.getOfflineSigner(chainId);
-        const enigmaUtils = window.getEnigmaUtils(chainId);
-
-        // You can get the address/public keys by `getAccounts` method.
-        // It can return the array of address/public key.
-        // But, currently, Keplr extension manages only one address/public key pair.
-        // XXX: This line is needed to set the sender address for SigningCosmosClient.
-        const accounts = await offlineSigner.getAccounts();
-
-        // Initialize the gaia api with the offline signer that is injected by Keplr extension.
-        const cosmJS = new SigningCosmWasmClient(
-            "https://lcd-secret.keplr.app/rest",
-            accounts[0].address,
-            offlineSigner,
-            enigmaUtils
-        );
-
-        // Your existing code continues...
-
-    } else {
-        connectedElement.innerHTML = 'Not connected to Kepler Wallet';
-
-        // Add a button to connect Kepler Wallet
-        var connectButton = document.createElement('button');
-        connectButton.innerHTML = 'Connect to Kepler Wallet';
-        connectButton.className = 'btn btn-primary';
-        connectButton.addEventListener('click', async function () {
-            // Your code to enable and connect Kepler Wallet
-            var chainId = "cosmoshub-4";
-            await window.keplr.enable(chainId);
-            // Continue with the rest of your connection logic
-        });
-
-        // Append the button to the connected element
-        connectedElement.appendChild(connectButton);
-    }
-});
-</script>
-
 </body>
 
 </html>
+
+
