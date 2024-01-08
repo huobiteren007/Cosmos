@@ -99,8 +99,8 @@ export const chainMap = {
     },         
     "celestia": {
         name: 'Celestia',
-        rpc: 'https://celestia-rpc.polkachu.com',
-        rest: 'https://celestia-rpc.polkachu.com',
+        rpc: 'https://rpc.cosmos.directory/celestia',
+        rest: 'https://rpc.cosmos.directory/celestia',
         symbol: 'TIA',
         denom: "utia",
         exponent: 6,
