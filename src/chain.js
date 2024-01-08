@@ -99,8 +99,8 @@ export const chainMap = {
     },         c
     "celestia": {
         name: 'Celestia',
-        rpc: 'https://rpc.cosmos.directory/celestia',
-        rest: 'https://rest.cosmos.directory/celestia',
+        rpc: 'https://public-celestia-rpc.numia.xyz',
+        rest: 'https://public-celestia-lcd.numia.xyz',
         symbol: 'TIA',
         denom: "utia",
         exponent: 6,
